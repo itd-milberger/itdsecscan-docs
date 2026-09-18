@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif">
+  <title>Mock-up of the Overview tab (illustrative data, not a real scan)</title>
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="460" rx="10" fill="#1d232a"/>
+
+  <!-- header -->
+  <rect width="960" height="56" fill="#191e24"/>
+  <rect width="960" height="1" y="56" fill="#2a323c"/>
+  <circle cx="28" cy="28" r="9" fill="url(#brand)"/>
+  <text x="46" y="24" fill="#e2e8f0" font-size="15" font-weight="700">ITdSecScan</text>
+  <text x="46" y="41" fill="#a6adbb" font-size="12">contoso.com</text>
+  <text x="934" y="24" fill="#a6adbb" font-size="11" text-anchor="end">Generated 2026-09-12 09:14</text>
+  <text x="934" y="41" fill="#a6adbb" font-size="11" text-anchor="end">Tier 0 bind · da-scan-svc</text>
+
+  <!-- tab bar -->
+  <rect y="57" width="960" height="38" fill="#191e24"/>
+  <rect y="94" width="960" height="1" fill="#2a323c"/>
+  <text x="24" y="80" fill="#e2e8f0" font-size="13" font-weight="600">Overview</text>
+  <rect x="24" y="88" width="66" height="3" rx="1.5" fill="#6366f1"/>
+  <text x="118" y="80" fill="#a6adbb" font-size="13">Active Directory</text>
+  <text x="242" y="80" fill="#a6adbb" font-size="13">Entra ID</text>
+  <text x="322" y="80" fill="#a6adbb" font-size="13">Attack Paths</text>
+  <text x="426" y="80" fill="#a6adbb" font-size="13">To Do</text>
+  <text x="486" y="80" fill="#a6adbb" font-size="13">Accepted Risks</text>
+  <text x="606" y="80" fill="#a6adbb" font-size="13">Info</text>
+
+  <!-- risk score card -->
+  <rect x="24" y="118" width="272" height="318" rx="10" fill="#191e24" stroke="#2a323c"/>
+  <text x="48" y="150" fill="#a6adbb" font-size="12" letter-spacing="0.04em">RISK SCORE</text>
+  <text x="48" y="212" fill="#6366f1" font-size="56" font-weight="700">62</text>
+  <text x="48" y="234" fill="#a6adbb" font-size="12">of 100 · higher is worse</text>
+
+  <g font-size="12">
+    <rect x="48" y="260" width="10" height="10" rx="2" fill="#ff637d"/>
+    <text x="66" y="269" fill="#e2e8f0">Critical</text>
+    <text x="272" y="269" fill="#e2e8f0" text-anchor="end">3</text>
+
+    <rect x="48" y="286" width="10" height="10" rx="2" fill="#fcb700"/>
+    <text x="66" y="295" fill="#e2e8f0">High</text>
+    <text x="272" y="295" fill="#e2e8f0" text-anchor="end">11</text>
+
+    <rect x="48" y="312" width="10" height="10" rx="2" fill="#00b5ff"/>
+    <text x="66" y="321" fill="#e2e8f0">Medium</text>
+    <text x="272" y="321" fill="#e2e8f0" text-anchor="end">27</text>
+
+    <rect x="48" y="338" width="10" height="10" rx="2" fill="#7b8794"/>
+    <text x="66" y="347" fill="#e2e8f0">Low</text>
+    <text x="272" y="347" fill="#e2e8f0" text-anchor="end">14</text>
+  </g>
+
+  <rect x="48" y="376" width="224" height="1" fill="#2a323c"/>
+  <text x="48" y="400" fill="#a6adbb" font-size="11">42 of 48 checks ran</text>
+  <text x="48" y="418" fill="#a6adbb" font-size="11">6 blocked — see Info tab</text>
+
+  <!-- worst findings -->
+  <text x="320" y="140" fill="#e2e8f0" font-size="13" font-weight="700">Worst findings</text>
+
+  <g>
+    <rect x="320" y="156" width="616" height="70" rx="8" fill="#191e24" stroke="#2a323c"/>
+    <rect x="320" y="156" width="4" height="70" rx="2" fill="#ff637d"/>
+    <rect x="340" y="172" width="62" height="18" rx="9" fill="#ff637d"/>
+    <text x="371" y="185" fill="#1d232a" font-size="10.5" font-weight="700" text-anchor="middle">CRITICAL</text>
+    <text x="340" y="212" fill="#e2e8f0" font-size="13">Domain Controllers OU permits unconstrained delegation</text>
+  </g>
+
+  <g>
+    <rect x="320" y="234" width="616" height="70" rx="8" fill="#191e24" stroke="#2a323c"/>
+    <rect x="320" y="234" width="4" height="70" rx="2" fill="#fcb700"/>
+    <rect x="340" y="250" width="46" height="18" rx="9" fill="#fcb700"/>
+    <text x="363" y="263" fill="#1d232a" font-size="10.5" font-weight="700" text-anchor="middle">HIGH</text>
+    <text x="340" y="290" fill="#e2e8f0" font-size="13">3 service accounts are Kerberoastable with a weak password</text>
+  </g>
+
+  <g>
+    <rect x="320" y="312" width="616" height="70" rx="8" fill="#191e24" stroke="#2a323c"/>
+    <rect x="320" y="312" width="4" height="70" rx="2" fill="#fcb700"/>
+    <rect x="340" y="328" width="46" height="18" rx="9" fill="#fcb700"/>
+    <text x="363" y="341" fill="#1d232a" font-size="10.5" font-weight="700" text-anchor="middle">HIGH</text>
+    <text x="340" y="368" fill="#e2e8f0" font-size="13">Global Administrator role held without MFA enforced</text>
+  </g>
+
+  <text x="320" y="410" fill="#a6adbb" font-size="11" font-style="italic">Info tab: bound account, tenant, and permissions this scan had.</text>
+</svg>

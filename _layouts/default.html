@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en-US" }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Applied before the stylesheet loads, so the page paints once, in the
+         right theme and language, instead of flashing dark/English first. -->
+    <script>
+    (function() {
+      try {
+        var theme = window.localStorage.getItem('itdsecscan.docs.theme');
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+        }
+        if (theme === 'light') { document.documentElement.setAttribute('data-theme', 'light'); }
+
+        var lang = window.localStorage.getItem('itdsecscan.docs.lang');
+        if (lang !== 'en' && lang !== 'de') {
+          lang = ((navigator.language || '').toLowerCase().indexOf('de') === 0) ? 'de' : 'en';
+        }
+        if (lang === 'de') { document.documentElement.setAttribute('data-lang', 'de'); }
+      } catch (e) {}
+    })();
+    </script>
+
+{% seo %}
+    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
+    {% include head-custom.html %}
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      <div class="itd-controls">
+        <button type="button" id="itdThemeToggle" class="itd-toggle" aria-label="Toggle color theme">
+          <span class="itd-theme-dark">&#9789; Dark</span>
+          <span class="itd-theme-light">&#9728; Light</span>
+        </button>
+        <button type="button" id="itdLangToggle" class="itd-toggle" aria-label="Switch language / Sprache wechseln">
+          <span class="itd-lang-to-de">Deutsch</span>
+          <span class="itd-lang-to-en">English</span>
+        </button>
+      </div>
+
+      {% unless page.url == "/" or page.url == "/index.html" %}
+      <a class="itd-back" href="{{ "/" | relative_url }}">&larr; Overview</a>
+      {% endunless %}
+
+      {% if site.title and site.title != page.title %}
+      <h1><a href="{{ "/" | absolute_url }}">{{ site.title }}</a></h1>
+      {% endif %}
+
+      {{ content }}
+
+      {% if site.github.private != true and site.github.license %}
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. {% github_edit_link "Improve this page" %}.
+      </div>
+      {% endif %}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    <script>
+    (function() {
+      'use strict';
+      var root = document.documentElement;
+
+      function save(key, value) {
+        try { window.localStorage.setItem('itdsecscan.docs.' + key, value); } catch (e) {}
+      }
+
+      var themeBtn = document.getElementById('itdThemeToggle');
+      if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+          var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          if (next === 'light') { root.setAttribute('data-theme', 'light'); } else { root.removeAttribute('data-theme'); }
+          save('theme', next);
+        });
+      }
+
+      var langBtn = document.getElementById('itdLangToggle');
+      if (langBtn) {
+        langBtn.addEventListener('click', function() {
+          var next = root.getAttribute('data-lang') === 'de' ? 'en' : 'de';
+          if (next === 'de') { root.setAttribute('data-lang', 'de'); } else { root.removeAttribute('data-lang'); }
+          save('lang', next);
+        });
+      }
+    })();
+    </script>
+  </body>
+</html>

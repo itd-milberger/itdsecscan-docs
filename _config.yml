@@ -1,0 +1,10 @@
+title: ITdSecScan
+description: Active Directory and Entra ID security assessment — setup, scanning and report handling
+theme: jekyll-theme-primer
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: false
+exclude:
+  - _config.yml
