@@ -21,6 +21,10 @@ It creates the app registration, requests the [Graph permissions](../reference/g
 the checks need, grants admin consent, issues a self-signed certificate, and writes
 `<AppName>.pfx` plus an `<AppName>.env` with the values to copy into your config.
 
+When it creates a certificate, the script **asks for the password** that protects
+the exported `.pfx`; the typing is hidden. There is no parameter for it — a
+password on the command line would land in the shell history.
+
 Re-running is safe: only missing permissions are added, and existing credentials
 are left alone.
 
@@ -29,7 +33,7 @@ Useful variants:
 | | |
 |---|---|
 | `-PermissionsOnly` | Add newly required permissions to an existing app without touching its credentials. This is what you run after a version that adds a check. |
-| `-Show` | Read-only: print the app's permissions with their consent status, and its certificates with expiry. Needs no Global Admin. |
+| `-Show` | Read-only: print the app's permissions with their consent status, its certificates with expiry, and the values for your config. Needs no Global Admin. |
 | `-Auth secret` \| `both` | A client secret instead of, or in addition to, a certificate. |
 | `-RenewCertificate` | Issue a new certificate and export a fresh `.pfx` — for when the old one was lost. Entra stores only the public key, so a previous private key cannot be recovered. |
 | `-PruneUnusedPermissions` | Revoke permissions the tool does not use. Opt-in, because revoking is destructive and an administrator may have granted something by hand for another purpose. |
@@ -52,7 +56,26 @@ result does not change.
 
 ## Configure the scanner
 
-Copy from the generated `.env` into `ITdSecScan.config` beside the executable:
+**Every run of the script ends with a block headed `VALUES FOR ITdSecScan.config`**
+— the setup, `-Show`, `-PermissionsOnly` and the maintenance runs alike — holding
+the lines to paste. To connect another machine to an app that already exists, run
+`-Show` and copy them. The certificate thumbprint is that of the newest valid
+certificate, and the block says whether that certificate is already in your
+certificate store or still has to be imported. A PFX password or client secret
+cannot be read back from Entra ID; the block points to the `.env` the setup wrote
+instead.
+
+**The quickest way: use the `.env` file.** The setup run — and
+`-RenewCertificate` — writes `<AppName>.env` next to the `.pfx`; the script prints
+the folder as `Output dir` when it starts and the full path under `OUTPUT FILES`
+when it finishes (set it with `-OutputDir`). It already holds every `AZURE_*` line with the real values, the PFX
+password or client secret included, in exactly the format `ITdSecScan.config`
+uses. Copy its lines into `ITdSecScan.config` as they are, below your `AD_*`
+settings. Because it contains the password in plain text, keep the file somewhere
+safe, or delete it once the config works; `-RenewCertificate` writes a new one. `-Show` and `-PermissionsOnly` write no
+`.env`; their block shows the values without the password.
+
+On Windows the lines are:
 
 ```ini
 AZURE_TENANT_ID=<tenant guid>
@@ -69,8 +92,9 @@ Import the PFX with:
 certutil -user -importpfx My <AppName>.pfx
 ```
 
-Alternatives are `AZURE_AUTH_MODE=cert` with `AZURE_CERT_PATH` and
-`AZURE_CERT_PASSWORD`, or `secret` with `AZURE_CLIENT_SECRET`.
+`AZURE_AUTH_MODE=cert_store` may be left out: a thumbprint on its own selects it.
+Alternatives are `AZURE_AUTH_MODE=certificate` with `AZURE_CERT_PATH` and
+`AZURE_CERT_PASSWORD` (macOS and Linux), or `secret` with `AZURE_CLIENT_SECRET`.
 
 ## Verify it, and read the answer carefully
 
@@ -114,6 +138,10 @@ Admin-Consent, stellt ein selbstsigniertes Zertifikat aus und schreibt
 `<AppName>.pfx` sowie eine `<AppName>.env` mit den Werten für die eigene
 Konfiguration.
 
+Wenn es ein Zertifikat erstellt, **fragt das Skript nach dem Passwort**, das die
+exportierte `.pfx` schützt; die Eingabe ist verdeckt. Einen Parameter dafür gibt es
+nicht — ein Passwort auf der Kommandozeile landet im Verlauf der Shell.
+
 Erneutes Ausführen ist unbedenklich: Es werden nur fehlende Berechtigungen
 hinzugefügt, bestehende Zugangsdaten bleiben unangetastet.
 
@@ -122,7 +150,7 @@ Nützliche Varianten:
 | | |
 |---|---|
 | `-PermissionsOnly` | Fügt einer bestehenden App neu benötigte Berechtigungen hinzu, ohne ihre Zugangsdaten anzurühren. Das läuft man nach einer Version, die einen Check hinzufügt. |
-| `-Show` | Nur lesend: gibt die Berechtigungen der App mit Consent-Status aus, sowie ihre Zertifikate mit Ablaufdatum. Braucht keinen Globalen Administrator. |
+| `-Show` | Nur lesend: gibt die Berechtigungen der App mit Consent-Status aus, ihre Zertifikate mit Ablaufdatum und die Werte für die eigene Konfiguration. Braucht keinen Globalen Administrator. |
 | `-Auth secret` \| `both` | Ein Client-Secret statt, oder zusätzlich zu, einem Zertifikat. |
 | `-RenewCertificate` | Stellt ein neues Zertifikat aus und exportiert eine frische `.pfx` — für den Fall, dass das alte verloren ging. Entra speichert nur den öffentlichen Schlüssel, ein vorheriger privater Schlüssel kann also nicht wiederhergestellt werden. |
 | `-PruneUnusedPermissions` | Entzieht Berechtigungen, die das Tool nicht nutzt. Opt-in, weil ein Entzug destruktiv ist und ein Administrator etwas per Hand für einen anderen Zweck erteilt haben könnte. |
@@ -147,8 +175,27 @@ Scan-Ergebnis ändert sich dadurch nicht.
 
 ## Den Scanner konfigurieren
 
-Aus der generierten `.env` in die `ITdSecScan.config` neben der ausführbaren
-Datei kopieren:
+**Jeder Lauf des Skripts endet mit einem Block `VALUES FOR ITdSecScan.config`** —
+die Einrichtung ebenso wie `-Show`, `-PermissionsOnly` und die Wartungsläufe — mit
+den Zeilen zum Einfügen. Um einen weiteren Rechner mit einer bestehenden App zu
+verbinden, `-Show` ausführen und sie kopieren. Der Zertifikat-Thumbprint ist der
+des neuesten gültigen Zertifikats, und der Block sagt, ob dieses Zertifikat schon
+im eigenen Zertifikatspeicher liegt oder noch importiert werden muss. Ein
+PFX-Passwort oder Client-Secret lässt sich aus Entra ID nicht zurücklesen; der
+Block verweist stattdessen auf die `.env`, die die Einrichtung geschrieben hat.
+
+**Am schnellsten: die `.env`-Datei verwenden.** Die Einrichtung — und
+`-RenewCertificate` — schreibt `<AppName>.env` neben die `.pfx`; das Skript nennt
+den Ordner beim Start als `Output dir` und den vollständigen Pfad am Ende unter
+`OUTPUT FILES` (festlegen mit `-OutputDir`). Sie enthält bereits jede `AZURE_*`-Zeile mit den echten Werten,
+einschließlich PFX-Passwort oder Client-Secret, genau im Format der
+`ITdSecScan.config`. Ihre Zeilen unverändert in die `ITdSecScan.config` kopieren,
+unter die eigenen `AD_*`-Einstellungen. Weil sie das Passwort im Klartext enthält,
+die Datei sicher aufbewahren oder löschen, sobald die Konfiguration funktioniert;
+`-RenewCertificate` schreibt eine neue. `-Show` und `-PermissionsOnly` schreiben
+keine `.env`; ihr Block zeigt die Werte ohne das Passwort.
+
+Unter Windows sind das die Zeilen:
 
 ```ini
 AZURE_TENANT_ID=<tenant guid>
@@ -165,8 +212,9 @@ exportierbaren und TPM-gebundenen Schlüsseln. Die PFX importieren mit:
 certutil -user -importpfx My <AppName>.pfx
 ```
 
-Alternativen sind `AZURE_AUTH_MODE=cert` mit `AZURE_CERT_PATH` und
-`AZURE_CERT_PASSWORD`, oder `secret` mit `AZURE_CLIENT_SECRET`.
+`AZURE_AUTH_MODE=cert_store` darf fehlen: Ein Thumbprint allein wählt es aus.
+Alternativen sind `AZURE_AUTH_MODE=certificate` mit `AZURE_CERT_PATH` und
+`AZURE_CERT_PASSWORD` (macOS und Linux), oder `secret` mit `AZURE_CLIENT_SECRET`.
 
 ## Verifizieren, und die Antwort sorgfältig lesen
 
