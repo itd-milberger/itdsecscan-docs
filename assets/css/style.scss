@@ -1,0 +1,272 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+// itdesign brand: the same indigo-to-violet gradient as the report's own
+// theme (internal/report/theme.go) and the other itdesign apps, on the same
+// dark slate background as sentinel.grantflow.cloud.
+
+:root {
+  --itd-bg: #0f172a;
+  --itd-surface: #1d232a;
+  --itd-surface-2: #191e24;
+  --itd-line: #2a323c;
+  --itd-content: #e2e8f0;
+  --itd-content-dim: #94a3b8;
+  --itd-indigo: #6366f1;
+  --itd-violet: #8b5cf6;
+  --itd-gradient: linear-gradient(135deg, var(--itd-indigo) 0%, var(--itd-violet) 100%);
+  --itd-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --itd-font-mono: 'IBM Plex Mono', 'Consolas', 'SFMono-Regular', Menlo, Monaco, monospace;
+
+  // Same status colors as the report's own theme (internal/report/theme.go),
+  // reused here for syntax highlighting so a code block reads against the
+  // dark background instead of Rouge's light-theme palette (near-black and
+  // navy text meant for a white page).
+  --itd-syn-success: #00d390;
+  --itd-syn-warning: #fcb700;
+  --itd-syn-info: #00b5ff;
+  --itd-syn-error: #ff637d;
+}
+
+// Light theme, re-declared under the same attribute and with the same values
+// as internal/report/theme.go's designTokensLight() — the two products read
+// as one. Every rule below reads the custom properties, so nothing else here
+// needs a light-specific override.
+:root[data-theme="light"] {
+  --itd-bg: #ffffff;
+  --itd-surface: #ffffff;
+  --itd-surface-2: #f2f2f2;
+  --itd-line: #dcdee2;
+  --itd-content: #1d2433;
+  --itd-content-dim: #5b6472;
+  --itd-indigo: #4f46e5;
+  --itd-violet: #7c3aed;
+
+  --itd-syn-success: #00a672;
+  --itd-syn-warning: #b98600;
+  --itd-syn-info: #0091cc;
+  --itd-syn-error: #d94b60;
+}
+
+html, body {
+  background-color: var(--itd-bg) !important;
+}
+
+body {
+  font-family: var(--itd-font-sans) !important;
+}
+
+.container-lg {
+  background-color: var(--itd-bg) !important;
+}
+
+.markdown-body {
+  background-color: var(--itd-bg) !important;
+  color: var(--itd-content) !important;
+  font-family: var(--itd-font-sans) !important;
+
+  .itd-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: .5rem;
+    margin-bottom: 1rem;
+  }
+  .itd-toggle {
+    font-family: var(--itd-font-sans);
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--itd-content-dim);
+    background: transparent;
+    border: 1px solid var(--itd-line);
+    border-radius: 9999px;
+    padding: .3rem .7rem;
+    cursor: pointer;
+  }
+  .itd-toggle:hover {
+    color: var(--itd-content);
+    border-color: var(--itd-indigo);
+  }
+  // Each label shows only what clicking switches *to*, the same convention
+  // as the report's own view controls (internal/report/tabs.go).
+  .itd-theme-light { display: none; }
+  .itd-lang-to-en { display: none; }
+
+  .itd-back {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    margin-bottom: .75rem;
+    color: var(--itd-content-dim) !important;
+    font-size: .85rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .itd-back:hover {
+    color: var(--itd-indigo) !important;
+  }
+
+  // Bilingual content: an English and a German <div markdown="1"> block per
+  // page. German is hidden until [data-lang="de"] is set on <html>.
+  .lang-de { display: none; }
+
+  // Site title: "ITdSecScan" as a wordmark next to the brand mark, shown on
+  // every page above its own heading.
+  > h1:first-child {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    border-bottom: none;
+    padding-bottom: .3rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      background: var(--itd-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent !important;
+      font-weight: 800;
+
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 1.4rem;
+        height: 1.4rem;
+        background-image: url("../../favicon.svg");
+        background-size: contain;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--itd-content) !important;
+    border-bottom-color: var(--itd-line) !important;
+  }
+
+  h1 code, h2 code, h3 code, h4 code {
+    color: inherit !important;
+  }
+
+  a {
+    color: var(--itd-indigo) !important;
+  }
+  a:hover {
+    color: var(--itd-violet) !important;
+  }
+
+  hr {
+    background-color: var(--itd-line) !important;
+  }
+
+  p, li, td, th {
+    color: var(--itd-content) !important;
+  }
+
+  strong {
+    color: var(--itd-content) !important;
+  }
+
+  blockquote {
+    color: var(--itd-content-dim) !important;
+    border-left-color: var(--itd-indigo) !important;
+  }
+
+  code, tt {
+    background-color: var(--itd-surface-2) !important;
+    color: var(--itd-content) !important;
+    font-family: var(--itd-font-mono) !important;
+    border: 1px solid var(--itd-line);
+  }
+
+  pre {
+    background-color: var(--itd-surface-2) !important;
+    border: 1px solid var(--itd-line) !important;
+
+    code, tt {
+      background-color: transparent !important;
+      border: none;
+    }
+  }
+
+  .highlight, pre.highlight {
+    background-color: var(--itd-surface-2) !important;
+
+    // Rouge's token classes, recolored for the dark background — the
+    // defaults (near-black, navy #000080) are unreadable on it.
+    .c, .c1, .cm, .cs, .cd { color: var(--itd-content-dim) !important; font-style: italic; }
+    .err { color: var(--itd-syn-error) !important; background-color: transparent !important; }
+    .gr, .gt { color: var(--itd-syn-error) !important; }
+    .gd { color: var(--itd-syn-error) !important; background-color: rgba(255, 99, 125, .12) !important; }
+    .gi { color: var(--itd-syn-success) !important; background-color: rgba(0, 211, 144, .12) !important; }
+    .go, .gp, .gh, .gu { color: var(--itd-content-dim) !important; }
+    .ge { color: var(--itd-content) !important; }
+    .k, .kc, .kd, .kn, .kp, .kr, .kv, .ow, .o, .nd {
+      color: var(--itd-violet) !important;
+      font-weight: 600;
+    }
+    .kt, .nc {
+      color: var(--itd-syn-warning) !important;
+      font-weight: 600;
+    }
+    .nb, .nt, .na, .no, .vc, .vg, .vi, .nv, .bp {
+      color: var(--itd-syn-info) !important;
+    }
+    .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss {
+      color: var(--itd-syn-success) !important;
+    }
+    .m, .mf, .mh, .il, .mi, .mo, .mb, .mx {
+      color: var(--itd-syn-info) !important;
+    }
+    .nf, .ne, .nl {
+      color: var(--itd-syn-warning) !important;
+      font-weight: 600;
+    }
+    .nn { color: var(--itd-content-dim) !important; }
+    .w { color: var(--itd-content-dim) !important; }
+  }
+
+  table {
+    display: table;
+    width: 100%;
+
+    tr {
+      background-color: var(--itd-surface) !important;
+      border-top-color: var(--itd-line) !important;
+    }
+    tr:nth-child(2n) {
+      background-color: var(--itd-surface-2) !important;
+    }
+    th, td {
+      border-color: var(--itd-line) !important;
+    }
+    th {
+      background-color: var(--itd-surface-2) !important;
+      color: var(--itd-content) !important;
+    }
+  }
+
+  img {
+    background-color: transparent;
+  }
+}
+
+:root[data-theme="light"] .itd-theme-dark { display: none; }
+:root[data-theme="light"] .itd-theme-light { display: inline; }
+
+:root[data-lang="de"] .lang-en { display: none; }
+:root[data-lang="de"] .lang-de { display: block; }
+:root[data-lang="de"] .itd-lang-to-de { display: none; }
+:root[data-lang="de"] .itd-lang-to-en { display: inline; }
+
+.footer {
+  color: var(--itd-content-dim) !important;
+  border-top-color: var(--itd-line) !important;
+
+  a {
+    color: var(--itd-indigo) !important;
+  }
+}
