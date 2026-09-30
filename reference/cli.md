@@ -9,94 +9,97 @@ report beside itself.
 
 ## What the run does
 
-One of these, or none — with no option at all the scanner runs every check it can and writes an HTML report.
+One of these, or none: without a mode the scanner runs every check and writes an HTML report.
 
 | Option | Default | What it does |
 |---|---|---|
-| `-baseline` | off | Runs all checks and saves a new baseline |
-| `-compare-latest` | off | Compares a live scan with the newest saved baseline, without asking (for scripts and Scheduled Tasks) |
-| `-compare-against` | off | Lists the saved baselines of each store and compares a live scan with the one you pick by number (needs an interactive terminal) |
-| `-html` | off | Run live scan and generate HTML report |
-| `-html-baseline` | off | Generate HTML report from a saved baseline |
-| `-export` | off | Exports a saved baseline to CSV |
-| `-list` | off | List all saved baselines |
+| `-baseline` | off | Live scan, saved as a new baseline (no report) |
+| `-compare-latest` | off | Live scan, compared with the newest saved baseline |
+| `-compare-against` | off | Live scan, compared with a baseline picked from a list (interactive) |
+| `-html` | off | Same as no mode: live scan and HTML report |
+| `-html-baseline` | off | HTML report from the newest saved baseline, no scan |
+| `-export` | off | Export the newest saved baseline to CSV |
+| `-list` | off | List the saved baselines |
 | `-cleanup <days>` | `0` | Delete baselines older than N days |
-| `-checksecurity <user>` | — | Analyse who can access a specific user's data and write a security report (HTML) |
-| `-checkpasswords <hashcat-file>` | — | Check NTLM hashes from a hash file (account:hash or account<whitespace>hash) against HaveIBeenPwned and write a standalone report (HTML); no other checks run |
-| `-render <report.json>` | — | Rebuild the reports from a saved report JSON (no scan, no LDAP, no baseline needed) |
+| `-checksecurity <user>` | — | Who can access one user's data (HTML report) |
+| `-checkpasswords <file>` | — | Standalone check of an NTLM hash file against HaveIBeenPwned (HTML report) |
+| `-render <report.json>` | — | Rebuild the reports from a saved report JSON, no scan |
+
+## Report options
+
+Additions to any run that writes a report.
+
+| Option | Default | What it does |
+|---|---|---|
+| `-mgmt-report` | off | Also write the management summary (HTML) for non-technical readers |
+| `-pdf` | off | Also save the management summary as PDF (implies -mgmt-report; needs Edge or Chrome) |
+| `-lang de|en` | `de` | Language of the management summary (default de) |
+| `-customer <name>` | — | Customer name in every report heading (overrides CUSTOMER_NAME; works with -render) |
 
 ## Comparison options
 
-Additions to -compare-latest or -compare-against (or to -render, which replays a comparison already made). They are refused on their own.
+Additions to -compare-latest, -compare-against, or -render of a comparison.
 
 | Option | Default | What it does |
 |---|---|---|
-| `-mgmt-report` | off | Export a short management comparison report as HTML |
-| `-drift-report` | off | Export a concise drift overview report (only material changes; time-only drift hidden) as HTML |
+| `-drift-report` | off | Also write a drift overview (HTML): material changes only |
 
 ## Password check options
 
-Additions to -checkpasswords. Refused on their own.
+Additions to -checkpasswords.
 
 | Option | Default | What it does |
 |---|---|---|
-| `-scan <report.json>` | — | With -checkpasswords: report JSON of a previous AD scan (html-reports/*.json), to classify admin and service accounts by real group membership and SPNs |
-
-## Kept for existing scripts
-
-Old spellings that still work, so Scheduled Tasks written for an earlier version keep running.
-
-| Option | Default | What it does |
-|---|---|---|
-| `-compare` | off | Same as -compare-latest. Accepted so existing scripts keep running |
-
-## Accepted but without effect
-
-Kept so existing scripts keep running. A comparison run always writes the full HTML report, so neither option changes anything.
-
-| Option | Default | What it does |
-|---|---|---|
-| `-compare-html` | off | No effect — a comparison run always writes the HTML report. Accepted so existing scripts keep running |
-| `-changed` | off | No effect — a comparison run always reports every check. Accepted so existing scripts keep running |
+| `-scan <report.json>` | — | Report JSON of an earlier AD scan, to classify admin and service accounts |
 
 ## Scope
 
 | Option | Default | What it does |
 |---|---|---|
-| `-target <env>` | `auto` | Environments to scan/report: auto \| ad \| azure \| both |
-| `-offline` | off | Offline mode: analyse saved baselines without LDAP connection |
+| `-target <env>` | `auto` | Environments: auto (default), ad, azure or both |
+| `-offline` | off | Work from saved baselines, no LDAP or Graph connection |
 
 ## Configuration and storage
 
 | Option | Default | What it does |
 |---|---|---|
-| `-config <path>` | `ITdSecScan.config` | Path to ITdSecScan configuration file |
-| `-output <path>` | — | Alternative baseline directory |
+| `-config <path>` | `ITdSecScan.config` | Configuration file (default ./ITdSecScan.config) |
+| `-output <path>` | — | Baseline directory (default ./baselines) |
 
 ## Profiles
 
-Several environments from one installation. Each profile keeps its own configuration, baselines and lists.
+Several environments from one installation, each with its own config and baselines.
 
 | Option | Default | What it does |
 |---|---|---|
-| `-profile <name>` | — | Run against one named profile: uses ITdSecScan.<name>.config and its own baseline store |
-| `-profiles <names>` | — | Run against several profiles in sequence: a comma-separated list, or all |
-| `-list-profiles` | off | List the configured profiles and where each stores its baselines |
+| `-profile <name>` | — | Use ITdSecScan.<name>.config and its own baselines |
+| `-profiles <names>` | — | Run several profiles in sequence: a,b,c or all |
+| `-list-profiles` | off | List the configured profiles |
 
 ## Accepted risks and to-dos
 
-Merging back the lists exported from a report. Files dropped in <baseline>/inbox/ are merged automatically and need no option.
+Merge lists exported from a report. Files in <baseline>/inbox/ are merged without an option.
 
 | Option | Default | What it does |
 |---|---|---|
-| `-import <file>` | — | Merge a list file exported from a report — accepted risks, to-dos or both — then continue |
-| `-whitelist <file>` | — | Merge an accepted-risk file exported from a report into the baseline directory, then continue |
-| `-todos <file>` | — | Merge a to-do list exported from a report into the baseline directory, then continue |
+| `-import <file>` | — | Merge an exported list (accepted risks, to-dos or both), then continue |
+| `-whitelist <file>` | — | Merge an exported accepted-risk list, then continue |
+| `-todos <file>` | — | Merge an exported to-do list, then continue |
 
 ## Diagnostics
 
 | Option | Default | What it does |
 |---|---|---|
-| `-testauth <env>` | — | Test connection and show account/permissions: ad \| azure \| both |
-| `-docs <dir>` | — | Regenerate the reference documentation into this directory and exit |
+| `-testauth <env>` | — | Test the connection and show account and rights: ad, azure or both |
+| `-docs <dir>` | — | Regenerate the reference documentation into dir and exit |
+
+## Kept for existing scripts
+
+Old spellings, accepted so Scheduled Tasks from earlier versions keep running.
+
+| Option | Default | What it does |
+|---|---|---|
+| `-compare` | off | Same as -compare-latest |
+| `-compare-html` | off | No effect; a comparison always writes the HTML report |
+| `-changed` | off | No effect; a comparison always reports every check |
 

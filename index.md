@@ -18,6 +18,7 @@ on a domain controller.
 
 | | |
 |---|---|
+| **[What's new](whats-new.md)** | The changes of the recent releases. |
 | **[Set up the Entra app](setup/entra-app.md)** | Needed once per tenant, before any Entra check can read anything. |
 | **[Set up Active Directory access](setup/active-directory.md)** | Which account to bind as, and what a less privileged one costs you. |
 | **[Run a scan](guide/scanning.md)** | The options that matter, baselines, comparisons, several tenants from one installation. |
@@ -29,10 +30,11 @@ on a domain controller.
 | | |
 |---|---|
 | **[Command line](reference/cli.md)** | Every option, generated from the binary. |
+| **[Configuration file](reference/config.md)** | Every key of `ITdSecScan.config`, with default and meaning. |
 | **[Checks](reference/checks.md)** | Every check with its stable ID and ATT&CK mapping. |
 | **[Graph permissions](reference/graph-permissions.md)** | What the Entra checks need and why. |
 
-The three reference pages are generated from the source, so they match the build
+The reference pages are generated from the source, so they match the build
 they were generated from. They are English only.
 
 ## Limitations to know before you read a report
@@ -72,6 +74,7 @@ Go-Laufzeitumgebung, nichts wird auf einem Domänencontroller installiert.
 
 | | |
 |---|---|
+| **[Neuigkeiten](whats-new.md)** | Die Änderungen der letzten Versionen. |
 | **[Die Entra-App einrichten](setup/entra-app.md)** | Einmal pro Tenant nötig, bevor ein Entra-Check überhaupt etwas lesen kann. |
 | **[Active-Directory-Zugriff einrichten](setup/active-directory.md)** | Mit welchem Konto gebunden wird, und was ein schwächer berechtigtes Konto kostet. |
 | **[Einen Scan ausführen](guide/scanning.md)** | Die relevanten Optionen, Baselines, Vergleiche, mehrere Mandanten aus einer Installation. |
@@ -83,10 +86,11 @@ Go-Laufzeitumgebung, nichts wird auf einem Domänencontroller installiert.
 | | |
 |---|---|
 | **[Kommandozeile](reference/cli.md)** | Jede Option, generiert aus der Binary. |
+| **[Konfigurationsdatei](reference/config.md)** | Jeder Schlüssel von `ITdSecScan.config`, mit Standardwert und Bedeutung. |
 | **[Checks](reference/checks.md)** | Jeder Check mit seiner stabilen ID und ATT&CK-Zuordnung. |
 | **[Graph-Berechtigungen](reference/graph-permissions.md)** | Was die Entra-Checks brauchen und warum. |
 
-Die drei Referenzseiten sind aus dem Quellcode generiert und passen daher immer zu
+Die Referenzseiten sind aus dem Quellcode generiert und passen daher immer zu
 dem Build, aus dem sie erzeugt wurden. Sie liegen nur auf Englisch vor.
 
 ## Einschränkungen, die vor dem Lesen eines Reports wichtig sind

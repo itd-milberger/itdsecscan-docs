@@ -12,12 +12,12 @@ would leave without data.
 
 | Permission | Needed by | Note |
 |---|---|---|
-| `Directory.Read.All` | Azure-Privileged-Roles, Azure-Privileged-Hygiene, Azure-Guest-App-Security, Azure-Consent-Grants, Azure-High-Value-Targets, Azure-Monitoring-Gaps, Azure-Workload-Policy | — |
+| `Directory.Read.All` | Azure-Privileged-Roles, Azure-Privileged-Hygiene, Azure-Guest-App-Security, Azure-Consent-Grants, Azure-High-Value-Targets, Azure-Monitoring-Gaps, Azure-Workload-Policy, Azure-Inactive-Members, Azure-Licence-Waste, Azure-Stale-Devices | — |
 | `Policy.Read.All` | Azure-CA-Policy-Gaps, Azure-Tenant-Hardening, Azure-Auth-Method-Hardening, Azure-Tenant-Settings-Gaps, Azure-Workload-Policy | — |
 | `UserAuthenticationMethod.Read.All` | Azure-MFA-Coverage | — |
-| `Application.Read.All` | Azure-App-Inventory, Azure-App-Permission-Risk, Azure-Stale-Applications, Azure-Workload-Identity-Risk, Azure-High-Value-Targets | — |
-| `AuditLog.Read.All` | Azure-Stale-Applications, Azure-Guest-App-Security | Entra ID P1/P2 to return data |
-| `RoleManagement.Read.Directory` | Azure-Custom-Role-Risk, Azure-PIM-Hygiene | Entra ID P2 for the PIM schedules |
+| `Application.Read.All` | Azure-App-Inventory, Azure-App-Permission-Risk, Azure-Stale-Applications, Azure-Workload-Identity-Risk, Azure-High-Value-Targets, Azure-Stale-Enterprise-Apps | — |
+| `AuditLog.Read.All` | Azure-Stale-Applications, Azure-Guest-App-Security, Azure-Stale-Enterprise-Apps, Azure-Inactive-Members | Entra ID P1/P2 to return data |
+| `RoleManagement.Read.Directory` | Azure-Custom-Role-Risk, Azure-PIM-Hygiene, Azure-Privileged-Roles, Azure-Privileged-Hygiene, Azure-Monitoring-Gaps, Azure-High-Value-Targets | Entra ID P2 for the PIM schedules |
 | `IdentityRiskyUser.Read.All` | Azure-Risky-Users | Entra ID P2 |
 | `DirectoryRecommendations.Read.All` | Azure-Monitoring-Gaps | Entra ID P1/P2 |
 | `SharePointTenantSettings.Read.All` | Azure-Workload-Policy | — |

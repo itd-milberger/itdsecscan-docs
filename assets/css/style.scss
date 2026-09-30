@@ -3,23 +3,31 @@
 
 @import "{{ site.theme }}";
 
-// itdesign brand: the same indigo-to-violet gradient as the report's own
-// theme (internal/report/theme.go) and the other itdesign apps, on the same
-// dark slate background as sentinel.grantflow.cloud.
+// itdesign brand, as on www.itdesign.at: the navy of the IT/DESIGN word mark,
+// the site's primary blue, and Montserrat — the same tokens as the report's own
+// theme (internal/report/theme.go), so the docs and the report read as one
+// product. Montserrat is served from this site (assets/fonts, SIL Open Font
+// License), not from Google Fonts: no third-party request for a visitor.
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("{{ '/assets/fonts/montserrat-latin.woff2' | relative_url }}") format('woff2');
+}
 
 :root {
-  --itd-bg: #0f172a;
-  --itd-surface: #1d232a;
-  --itd-surface-2: #191e24;
-  --itd-line: #2a323c;
-  --itd-content: #e2e8f0;
-  --itd-content-dim: #94a3b8;
-  --itd-indigo: #6366f1;
-  --itd-violet: #8b5cf6;
-  --itd-gradient: linear-gradient(135deg, var(--itd-indigo) 0%, var(--itd-violet) 100%);
-  --itd-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --itd-font-mono: 'IBM Plex Mono', 'Consolas', 'SFMono-Regular', Menlo, Monaco, monospace;
-
+  --itd-bg: #081322;
+  --itd-surface: #10223b;
+  --itd-surface-2: #0c1a2e;
+  --itd-line: #213855;
+  --itd-content: #eef3f9;
+  --itd-content-dim: #b3c1d3;
+  --itd-primary: #5a9df0;
+  --itd-accent: #8fbaf3;
+  --itd-gradient: linear-gradient(135deg, #2d80e7 0%, #8fbaf3 100%);
+  --itd-font-sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
   // Same status colors as the report's own theme (internal/report/theme.go),
   // reused here for syntax highlighting so a code block reads against the
   // dark background instead of Rouge's light-theme palette (near-black and
@@ -37,12 +45,13 @@
 :root[data-theme="light"] {
   --itd-bg: #ffffff;
   --itd-surface: #ffffff;
-  --itd-surface-2: #f2f2f2;
-  --itd-line: #dcdee2;
-  --itd-content: #1d2433;
+  --itd-surface-2: #f5f5f5;
+  --itd-line: #dee2e6;
+  --itd-content: #1d2935;
   --itd-content-dim: #5b6472;
-  --itd-indigo: #4f46e5;
-  --itd-violet: #7c3aed;
+  --itd-primary: #2d80e7;
+  --itd-accent: #12325b;
+  --itd-gradient: linear-gradient(135deg, #12325b 0%, #2d80e7 100%);
 
   --itd-syn-success: #00a672;
   --itd-syn-warning: #b98600;
@@ -86,7 +95,7 @@ body {
   }
   .itd-toggle:hover {
     color: var(--itd-content);
-    border-color: var(--itd-indigo);
+    border-color: var(--itd-primary);
   }
   // Each label shows only what clicking switches *to*, the same convention
   // as the report's own view controls (internal/report/tabs.go).
@@ -104,7 +113,7 @@ body {
     text-decoration: none;
   }
   .itd-back:hover {
-    color: var(--itd-indigo) !important;
+    color: var(--itd-primary) !important;
   }
 
   // Bilingual content: an English and a German <div markdown="1"> block per
@@ -152,10 +161,10 @@ body {
   }
 
   a {
-    color: var(--itd-indigo) !important;
+    color: var(--itd-primary) !important;
   }
   a:hover {
-    color: var(--itd-violet) !important;
+    color: var(--itd-accent) !important;
   }
 
   hr {
@@ -172,7 +181,7 @@ body {
 
   blockquote {
     color: var(--itd-content-dim) !important;
-    border-left-color: var(--itd-indigo) !important;
+    border-left-color: var(--itd-primary) !important;
   }
 
   code, tt {
@@ -205,7 +214,7 @@ body {
     .go, .gp, .gh, .gu { color: var(--itd-content-dim) !important; }
     .ge { color: var(--itd-content) !important; }
     .k, .kc, .kd, .kn, .kp, .kr, .kv, .ow, .o, .nd {
-      color: var(--itd-violet) !important;
+      color: var(--itd-accent) !important;
       font-weight: 600;
     }
     .kt, .nc {
@@ -267,6 +276,6 @@ body {
   border-top-color: var(--itd-line) !important;
 
   a {
-    color: var(--itd-indigo) !important;
+    color: var(--itd-primary) !important;
   }
 }

@@ -48,13 +48,16 @@ on one day, and a reference chosen months back makes every number larger.
 ### Additions
 
 Both modes always write the full HTML comparison report, not only console output.
-`-mgmt-report` and `-drift-report` are real additions to them and are refused on
-their own — `-compare-latest`, `-compare-against` or `-render` has to be present,
-since there is otherwise no comparison for them to write:
+`-drift-report` is a real addition to them and is refused on its own —
+`-compare-latest`, `-compare-against` or `-render` has to be present, since there
+is otherwise no comparison for it to write. `-mgmt-report` and `-pdf` work with
+every run that writes a report; with a comparison they summarise what changed:
 
 | Addition | Effect |
 |---|---|
-| `-mgmt-report` | Also write a short management summary. |
+| `-mgmt-report` | Also write a management summary for non-technical readers — the same page with or without a comparison, which adds what changed. See [The management summary](report.md#the-management-summary). |
+| `-pdf` | Also save the management summary as PDF. Implies `-mgmt-report`. Needs Microsoft Edge or Google Chrome on the machine. |
+| `-lang de\|en` | Language of the management summary. German by default. |
 | `-drift-report` | Also write an overview restricted to material drift. Time-only changes and a list merely reordered are hidden; a changed finding is shown once, with what was removed struck through and what was added highlighted. |
 
 `-changed` and `-compare-html` are accepted but have **no effect** — a comparison
@@ -221,13 +224,17 @@ Baselines entstehen, und eine Referenz von vor Monaten macht jede Zahl größer.
 ### Ergänzungen
 
 Beide Modi schreiben immer den vollständigen HTML-Vergleichsreport, nicht nur
-Konsolenausgabe. `-mgmt-report` und `-drift-report` sind echte Ergänzungen dazu und
-werden allein verweigert — `-compare-latest`, `-compare-against` oder `-render` muss
-vorhanden sein, da es sonst keinen Vergleich gibt, den sie schreiben könnten:
+Konsolenausgabe. `-drift-report` ist eine echte Ergänzung dazu und wird allein
+verweigert — `-compare-latest`, `-compare-against` oder `-render` muss vorhanden
+sein, da es sonst keinen Vergleich gibt, den es schreiben könnte. `-mgmt-report` und
+`-pdf` funktionieren mit jedem Lauf, der einen Report schreibt; mit einem Vergleich
+fassen sie zusammen, was sich geändert hat:
 
 | Ergänzung | Wirkung |
 |---|---|
-| `-mgmt-report` | Schreibt zusätzlich eine kurze Management-Zusammenfassung. |
+| `-mgmt-report` | Schreibt zusätzlich eine Management-Zusammenfassung für Nicht-Techniker — dieselbe Seite mit oder ohne Vergleich, der ergänzt, was sich geändert hat. Siehe [Die Management Summary](report.md#the-management-summary). |
+| `-pdf` | Speichert die Management-Zusammenfassung zusätzlich als PDF. Schließt `-mgmt-report` ein. Benötigt Microsoft Edge oder Google Chrome auf dem Rechner. |
+| `-lang de\|en` | Sprache der Management-Zusammenfassung. Standard ist Deutsch. |
 | `-drift-report` | Schreibt zusätzlich eine auf wesentliche Drift beschränkte Übersicht. Reine Zeitänderungen und bloß umsortierte Listen werden ausgeblendet; ein geänderter Befund erscheint einmal, Entferntes durchgestrichen, Hinzugekommenes hervorgehoben. |
 
 `-changed` und `-compare-html` werden akzeptiert, haben aber **keine Wirkung** —
